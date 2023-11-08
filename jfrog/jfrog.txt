@@ -1,1 +1,33 @@
-jfrog.txt
+/* Links */
+
+https://jfrog.com/community/download-artifactory-oss/
+https://jfrog.com/help/r/jfrog-installation-setup-documentation/install-artifactory-single-node-with-docker
+
+
+docker pull releases-docker.jfrog.io/jfrog/artifactory-oss:latest
+mkdir -p $JFROG_HOME/artifactory/var/etc/
+cd $JFROG_HOME/artifactory/var/etc/
+touch ./system.yaml
+chown -R 1030:1030 $JFROG_HOME/artifactory/var
+
+--Mac
+chmod -R 777 $JFROG_HOME/artifactory/var
+
+Artifactory Pro
+docker run --name artifactory -v $JFROG_HOME/artifactory/var/:/var/opt/jfrog/artifactory -d -p 8081:8081 -p 8082:8082 releases-docker.jfrog.io/jfrog/artifactory-pro:latest
+
+Artifactory Open Source
+docker run --name artifactory -v $JFROG_HOME/artifactory/var/:/var/opt/jfrog/artifactory -d -p 8081:8081 -p 8082:8082 releases-docker.jfrog.io/jfrog/artifactory-oss:latest
+
+Artifactory Community Edition for C/C++
+docker run --name artifactory -v $JFROG_HOME/artifactory/var/:/var/opt/jfrog/artifactory -d -p 8081:8081 -p 8082:8082 releases-docker.jfrog.io/jfrog/artifactory-cpp-ce:latest
+
+
+docker ps
+docker stop artifactory
+
+docker logs -f artifactory
+
+http://localhost:8082/ui/
+
+
